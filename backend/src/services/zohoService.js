@@ -7,6 +7,7 @@ async function getZohoAccessToken() {
   const accountsUrl = process.env.ZOHO_ACCOUNTS_URL || 'https://accounts.zoho.com';
 
   if (!clientId || !clientSecret || !refreshToken || clientId.includes('EXAMPLE')) {
+    console.log("❌ ZOHO ERROR: Missing credentials in ENV");
     return null;
   }
 
@@ -19,6 +20,8 @@ async function getZohoAccessToken() {
     };
 
     const response = await axios.post(`${accountsUrl}/oauth/v2/token`, null, { params });
+
+    console.log("✅ ZOHO SUCCESS: Token refreshed");
 
     if (response.data && response.data.access_token) {
       return response.data.access_token;
